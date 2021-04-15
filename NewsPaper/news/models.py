@@ -14,10 +14,10 @@ class Author(models.Model):
 
     def update_rating(self):
         articles_rating = self.authorposts.all().aggregate(Sum('rating')) * 3
-        comments_rating = User.objects.get(id=self.userID).usercomments.all().aggregate(Sum('rating'))
-        feedback_rating = self.authorposts.all().postcomments.filter(comment__userID != self.userID).aggregate(
-            Sum('rating'))
-        self.rating = articles_rating + comments_rating + feedback_rating
+        # comments_rating = User.objects.get(id=self.userID).usercomments.all().aggregate(Sum('rating'))
+        # feedback_rating = self.authorposts.all().postcomments.filter(comment__userID != self.userID).aggregate(
+        #     Sum('rating'))
+        self.rating = articles_rating #+ comments_rating + feedback_rating
         self.save()
 
 

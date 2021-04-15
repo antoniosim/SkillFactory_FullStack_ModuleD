@@ -1,4 +1,4 @@
-from news.models import User,Author,Post,Category,PostCategory,Comment
+from news.models import User,Author,Post,Category,PostCategory,Comment, show_best_author, show_best_article
 from django.db.models import Sum
 User.objects.all().delete()
 Author.objects.all().delete()
@@ -44,14 +44,6 @@ comment4.dislike()
 comment5.like()
 author1.update_rating()
 author2.update_rating()
-best_author = Author.objects.order_by("-rating")[0]
-print(f'Лучший автор: {best_author.userID.username}, рейтинг: {best_author.rating}')
-best_article = Post.objects.order_by("-rating")[0]
-print('')
-print(f'Лучшая статья: "{best_article.heading}" [Рейтинг: {best_article.rating}]\n'
-      f'{best_article.createdAt.strftime("%d.%m.%Y %H:%M:%S")} [Автор: {best_article.authorID.userID.username}]\n'
-      f'{best_article.preview()}')
-for comt in best_article.postcomments.all():
-    print(f'{comt.createdAt.strftime("%d.%m.%Y %H:%M:%S")} [Автор: {comt.userID.username}]\n'
-          f'{comt.content}\n'
-          f'Рейтинг: {comt.rating}')
+show_best_author()
+show_best_article(True)
+exit()

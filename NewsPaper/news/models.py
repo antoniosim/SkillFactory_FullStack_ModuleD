@@ -13,7 +13,7 @@ class Author(models.Model):
     rating = models.IntegerField()
 
     def update_rating(self):
-        articles_rating = self.authorposts.all().aggregate(Sum('rating')) * 3
+        articles_rating = self.objects.authorposts.all().aggregate(Sum('rating')) * 3
         # comments_rating = User.objects.get(id=self.userID).usercomments.all().aggregate(Sum('rating'))
         # feedback_rating = self.authorposts.all().postcomments.filter(comment__userID != self.userID).aggregate(
         #     Sum('rating'))

@@ -6,6 +6,7 @@ class PostList(ListView):
     model = Post
     template_name = 'posts.html'
     context_object_name = 'posts'
+    queryset = Post.objects.order_by('createdAt')
 
 
 # создаём представление в котором будет детали конкретного отдельного товара

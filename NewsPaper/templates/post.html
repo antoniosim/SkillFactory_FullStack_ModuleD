@@ -3,10 +3,15 @@
 
 <!-- Название у нас будет posts -->
 {% block title %}
-Статьи
+Статья - {{ post.heading }}
 {% endblock title %}
 
 <!-- В контенте на странице мы выводим саму статьи, айди которого было передано в адрес -->
 {% block content %}
-<h1>{{ post }}</h1>
+<h1 style="text-align: center;">{{ post.heading }}</h1>
+<h4 style="text-align: center;">{{ post.createdAt|date:'d.m.y H:i:s' }} | {{ post.authorID.userID.last_name }} {{ post.authorID.userID.first_name }} | Рейтинг статьи: {{ post.rating }}</h4>
+<p>
+{{ post.content }}
+</p>
+
 {% endblock content %}

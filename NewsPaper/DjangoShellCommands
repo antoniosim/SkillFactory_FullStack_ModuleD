@@ -1,4 +1,5 @@
-from news.models import User,Author,Post,Category,PostCategory,Comment, show_best_author, show_best_article
+from news.models import User,Author,Post,Category,PostCategory,Comment
+from news.services import show_best_author, show_best_article
 from django.db.models import Sum
 User.objects.all().delete()
 Author.objects.all().delete()

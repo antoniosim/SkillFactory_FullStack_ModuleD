@@ -21,9 +21,15 @@ class Author(models.Model):
         self.save()
         return f'New rating = {self.rating}'
 
+    def __str__(self):
+        return f'{self.userID.last_name} {self.userID.first_name}'
+
 
 class Category(models.Model):
     title = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return f'#{self.title.upper()}'
 
 
 class Post(models.Model):
@@ -46,6 +52,9 @@ class Post(models.Model):
     def preview(self):
         return self.content[:124] + '...'
 
+    def __str__(self):
+        return f'{self.pk}: [{self.authorID.userID.last_name} {self.authorID.userID.first_name}] {self.heading}'
+
 
 class Comment(models.Model):
     userID = models.ForeignKey(User, on_delete=models.CASCADE, related_name="usercomments")
@@ -62,26 +71,13 @@ class Comment(models.Model):
         self.rating -= 1
         self.save()
 
+    def __str__(self):
+        return f'{self.content[:100]}'
+
 
 class PostCategory(models.Model):
     postID = models.ForeignKey(Post, on_delete=models.CASCADE)
     categoryID = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-
-def show_best_author():
-    best_author = Author.objects.order_by("-rating")[0]
-    print(f'Лучший автор: {best_author.userID.username}, рейтинг: {best_author.rating}')
-
-
-def show_best_article(show_comments=False):
-    best_article = Post.objects.order_by("-rating")[0]
-    res = '\n\n' + f'"{best_article.heading}" [Рейтинг: {best_article.rating}]' + '\n' \
-          f'{best_article.preview()}' + '\n' \
-          f'{best_article.createdAt.strftime("%d.%m.%Y %H:%M:%S")} ({best_article.authorID.userID.username})' + '\n\n'
-
-    if show_comments:
-        for comt in best_article.postcomments.all():
-            res += f'[{comt.createdAt.strftime("%d.%m.%Y %H:%M:%S")}] - {comt.userID.username}' + '\n' \
-                   f'{comt.content}' + '\n' \
-                   f'[Рейтинг: {comt.rating}]' + '\n\n'
-    print(res)
+    def __str__(self):
+        return f'[#{self.categoryID.title.upper()}] {self.postID.heading}'

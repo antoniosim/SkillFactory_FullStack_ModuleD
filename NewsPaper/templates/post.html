@@ -1,5 +1,6 @@
 <!--  наследуемся от шаблона default.html, который мы создавали ещё во времена flatpages -->
 {% extends 'default.html' %}
+{% load custom_filters %}
 
 <!-- Название у нас будет posts -->
 {% block title %}
@@ -8,10 +9,10 @@
 
 <!-- В контенте на странице мы выводим саму статьи, айди которого было передано в адрес -->
 {% block content %}
-<h1 style="text-align: center;">{{ post.heading }}</h1>
+<h1 style="text-align: center;">{{ post.heading|Censor }}</h1>
 <h4 style="text-align: center;">{{ post.createdAt|date:'d.m.y H:i:s' }} | {{ post.authorID.userID.last_name }} {{ post.authorID.userID.first_name }} | Рейтинг статьи: {{ post.rating }}</h4>
 <p>
-{{ post.content }}
+{{ post.content|Censor }}
 </p>
 
 {% endblock content %}

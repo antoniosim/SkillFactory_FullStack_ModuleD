@@ -1,5 +1,6 @@
 <!--  наследуемся от шаблона default.html, который мы создавали ещё во времена flatpages -->
 {% extends 'default.html' %}
+{% load custom_filters %}
 
 <!-- Название у нас будет Posts -->
 {% block title %}
@@ -28,8 +29,8 @@
             <td width="30">{{ post.rating }}</td>
             <td width="100">{{ post.authorID.userID.last_name }} {{ post.authorID.userID.first_name }}</td>
             <td width="200">{{ post.createdAt|date:"d.m.y H:i:s" }}</td>
-            <td width="400"><a href="{{ post.pk }}">{{ post.heading }}</a></td>
-            <td>{{ post.content|truncatewords:20 }}</td>
+            <td width="400"><a href="{{ post.pk }}">{{ post.heading|Censor }}</a></td>
+            <td>{{ post.content|truncatechars:50|Censor }}</td>
         </tr>
         {% endfor %}
     </table>
